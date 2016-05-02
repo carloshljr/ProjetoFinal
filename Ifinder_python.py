@@ -61,3 +61,12 @@ def add():
         email = request.form['email']
         telefone = request.form['telefone']
         
+         #Aqui uma pequena validacao dos dados inseridos.
+        if codigo == '' or email == '' or nomep == '':
+            e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
+            return render_template('main.html', dic = DB, erro = e)
+        elif nomep in DB:
+            e = 'Objeto perdido já cadastrado!'  #Mensagem de erro
+            return render_template('main.html', dic = DB, erro = e)            
+        else:
+            DB[nomep] = Produto(nomep,tipo,marca,data,local,observ,nomeu,codigo,email,telefone)
