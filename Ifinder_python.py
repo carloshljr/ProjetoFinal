@@ -49,7 +49,7 @@ def add():
     
     #Tentar a insercao apenas quando vier via POST
     if request.method == 'POST':
-
+    
         nomep = request.form['nomep']
         tipo = request.form['tipo']
         marca = request.form['marca']
@@ -69,4 +69,15 @@ def add():
             e = 'Objeto perdido já cadastrado!'  #Mensagem de erro
             return render_template('main.html', dic = DB, erro = e)            
         else:
-            DB[nomep] = Produto(nomep,tipo,marca,data,local,observ,nomeu,codigo,email,telefone)
+            DB[nomep] = produto(nomep,tipo,marca,data,local,observ,nomeu,codigo,email,telefone)
+            
+    #Caso for chamado via GET ou apos terminar a insercao:
+    return redirect(url_for('main'))
+
+
+#Comando necessario para iniciar a aplicacao. Como a aplicacao nao
+#ira rodar no Spyder, durante a fase de desenvolvimento e 
+#aconselhavel deixar o modo debug ligado. Desligar quando for realizar
+#o deployment.
+if __name__ == '__main__':
+    app.run(debug=True, host= '0.0.0.0', port=5000)
