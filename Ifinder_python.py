@@ -38,7 +38,7 @@ def main():
 	#interpretar codigo, mas foi adaptado para utilizacao e geracao
 	#de conteudo dinamico.
 	#Abrir e ler o arquivo em algum editor de texto.
-    return render_template('Ifinder.html', dic = DB, erro = '')
+    return render_template('ifind.html', dic = DB, erro = '')
     
 
 #O endpoint abaixo ira tratar quando o usuario pedir a insercao
@@ -50,29 +50,28 @@ def add():
     #Tentar a insercao apenas quando vier via POST
     if request.method == 'POST':
     
-        nomep = request.form['nomep']
-        tipo = request.form['tipo']
-        marca = request.form['marca']
-        data = request.form['data']
-        local = request.form['local']
-        observ = request.form['observ']
-        nomeu = request.form['nomeu']
-        codigo = request.form['codigo']
-        email = request.form['email']
-        telefone = request.form['telefone']
+        nomep = request.form['Nome']
+        tipo = request.form['Tipo']
+        marca = request.form['Marca']
+        data = request.form['Data']
+        local = request.form['Local']
+        observ = request.form['Observacoes']
+        codigo = request.form['Codigo']
+        email = request.form['Email']
+        telefone = request.form['Telefone']
         
          #Aqui uma pequena validacao dos dados inseridos.
         if codigo == '' or email == '' or nomep == '':
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
-            return render_template('main.html', dic = DB, erro = e)
-        elif nomep in DB:
-            e = 'Objeto perdido já cadastrado!'  #Mensagem de erro
-            return render_template('main.html', dic = DB, erro = e)            
+            return render_template('ifind.html', dic = DB, erro = e)
+        elif codigo in DB:
+            e = 'Objeto perdido já cadastrado! Porfavor use outro codigo de validação'  #Mensagem de erro
+            return render_template('ifind.html', dic = DB, erro = e)            
         else:
-            DB[nomep] = produto(nomep,tipo,marca,data,local,observ,nomeu,codigo,email,telefone)
+            DB[nomep] = produto(nomep,tipo,marca,data,local,observ,codigo,email,telefone)
             
     #Caso for chamado via GET ou apos terminar a insercao:
-    return redirect(url_for('main'))
+    return redirect(url_for('ifind'))
 
 
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
@@ -80,4 +79,4 @@ def add():
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
 #o deployment.
 if __name__ == '__main__':
-    app.run(debug=True, host= '0.0.0.0', port=5000)
+    app.run(debug=True, host= '0.0.0.0', port=5220)
