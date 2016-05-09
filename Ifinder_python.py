@@ -79,7 +79,7 @@ def verificacao():
 
         codigov = request.form['CodigoV']
         nomep = request.form['Nome']
-        codigo = DB[nomep]
+        
 
         #validacao dos dados inseridos
 
@@ -91,5 +91,5 @@ def verificacao():
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
 #o deployment.
-if __name__ == '__main__':
+if __name__ == '__ifind__':
     app.run(debug=True, host= '0.0.0.0', port=5220)
