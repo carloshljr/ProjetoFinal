@@ -37,7 +37,7 @@ class Produto():
         
     def Apagar(self):
         
-        
+        pass
         
 
 #Dicionario que irá armazenar os objetos da classe produto

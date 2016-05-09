@@ -65,13 +65,15 @@
   							<!-- Funcionamento analogo ao descrito acima -->
   							{% for e in dic: %}
   							<tr>
-  								<td>{{ dic[e].Nome }}</td>
-  								<td>{{ dic[e].Tipo }}</td>
-  								<td>{{ dic[e].Marca }}</td>
-  								<td>{{ dic[e].Data }}</td>
-                  <td>{{ dic[e].Local }}</dh>
-                  <td>{{ dic[e].Observacoes }}</td>
-
+  								<td>{{ dic[e].nomep }}</td>
+  								<td>{{ dic[e].tipo }}</td>
+  								<td>{{ dic[e].marca }}</td>
+  								<td>{{ dic[e].data }}</td>
+                  <td>{{ dic[e].local }}</dh>
+                  <td>{{ dic[e].observ }}</td>
+                  <td>{{ dic[e].codigo }}</td>
+                  <td>{{ dic[e].email }}</td>
+                  <td>{{ dic[e].telefone }}</td>
   								<!-- href vai indicar qual o endpoint sera utilizado via GET. -->
   								<!-- O ? indica aonde comecam os arqumentos que serao passados. -->
 
@@ -138,6 +140,11 @@
                 <div class="col_6">
                 <label for="Email">Email</label>
                 <input id="Email" name="Email" type="text" />
+                </div>
+
+                <div class="col_6">
+                <label for="Telefone">Telefone</label>
+                <input id="Telefone" name="Telefone" type="text" />
                 </div>
 
 
