@@ -56,7 +56,7 @@
   							<th>Marca</th>
   							<th>Data</th>
   							<th>Local</th>
-                <th>Observa&ccedil;&otilde;es</th>
+                <th>Observacoes</th>
 
   						</tr></thead>
   						<tbody>
@@ -65,12 +65,12 @@
   							<!-- Funcionamento analogo ao descrito acima -->
   							{% for e in dic: %}
   							<tr>
-  								<td><a style="text-decoration: none; color: black;"href=""</a>{{ dic[e].Nome }}</td>
+  								<td>{{ dic[e].Nome }}</td>
   								<td>{{ dic[e].Tipo }}</td>
   								<td>{{ dic[e].Marca }}</td>
   								<td>{{ dic[e].Data }}</td>
                   <td>{{ dic[e].Local }}</dh>
-                  <td>{{ dic[e].Observa&ccedil;&otilde;es }}</td>
+                  <td>{{ dic[e].Observacoes }}</td>
 
   								<!-- href vai indicar qual o endpoint sera utilizado via GET. -->
   								<!-- O ? indica aonde comecam os arqumentos que serao passados. -->
@@ -140,10 +140,7 @@
                 <input id="Email" name="Email" type="text" />
                 </div>
 
-                <div class="col_6">
-                <label for="Telefone">Telefone</label>
-                <input id="Telefone" name="Telefone" type="text" />
-                </div>
+
 
   							<!-- Botao de Envio: -->
   							<div class="col_12 right">
