@@ -6,6 +6,12 @@ Created on Wed Apr 27 17:32:08 2016
 """
 from flask import Flask, render_template, request, redirect, url_for
 
+import firecall
+
+my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+
+from datetime import datetime
+
 class produto():
     
     #"Classe utilizada para armazenar os dados de um produto"
@@ -26,7 +32,10 @@ class produto():
 #O codigo sera usada como chave
 
 DB = {}
-
+class salvar():
+    def __init__(self,lista):
+        lista = self.lista
+        my_firebase.put_sync(point = '/Produto' , data = lista)
 #instrucao para a inicializacao do Flask
 app = Flask(__name__, static_url_path='')
 
@@ -58,7 +67,8 @@ def add():
         codigo = request.form['Codigo']
         email = request.form['Email']
         telefone = request.form['Telefone']
-        
+        (dt, micro) = datetime.utcnow().strftime('%d-%m-%Y %H:%M:%S.%f').split('.')
+        dt = "%s.%03d" % (dt, int(micro) / 1000)
         
          #Aqui uma pequena validacao dos dados inseridos.
         if codigo == '': 
@@ -68,8 +78,8 @@ def add():
             e = 'Objeto perdido já cadastrado! Porfavor use outro codigo de validação'  #Mensagem de erro
             return render_template('ifind.html', dic = DB, erro = e)            
         else:
-            DB[nomep] = produto(nomep,tipo,marca,data,local,observ,codigo,email,telefone)
-            
+            DB[dt] = produto(nomep,tipo,marca,data,local,observ,codigo,email,telefone)
+            salvar(DB)
     #Caso for chamado via GET ou apos terminar a insercao:
     return redirect(url_for('main'))
 
