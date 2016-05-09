@@ -10,14 +10,13 @@ class produto():
     
     #"Classe utilizada para armazenar os dados de um produto"
     
-    def __init__(self,nomep,tipo,marca,data,local,observ,nomeu,codigo,email,telefone):
+    def __init__(self,nomep,tipo,marca,data,local,observ,codigo,email,telefone):
         self.nomep = nomep
         self.tipo = tipo
         self.marca = marca
         self.data = data
         self.local = local
         self.observ = observ
-        self.nomeu = nomeu
         self.codigo = codigo
         self.email = email
         self.telefone = telefone
@@ -60,6 +59,7 @@ def add():
         email = request.form['Email']
         telefone = request.form['Telefone']
         
+        
          #Aqui uma pequena validacao dos dados inseridos.
         if codigo == '': 
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
@@ -71,7 +71,7 @@ def add():
             DB[nomep] = produto(nomep,tipo,marca,data,local,observ,codigo,email,telefone)
             
     #Caso for chamado via GET ou apos terminar a insercao:
-    return redirect(url_for('ifind'))
+    return redirect(url_for('main'))
 
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
