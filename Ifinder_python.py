@@ -73,6 +73,19 @@ def add():
     #Caso for chamado via GET ou apos terminar a insercao:
     return redirect(url_for('ifind'))
 
+@app.route('/verifica', methods=['POST', 'GET'])
+def verificacao():
+    if request.method == 'POST':
+
+        codigov = request.form['CodigoV']
+        nomep = request.form['Nome']
+        codigo = DB[nomep]
+
+        #validacao dos dados inseridos
+
+        if codigov == codigo:
+            #liberar o email da pessoa que achou
+            email = True
 
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
