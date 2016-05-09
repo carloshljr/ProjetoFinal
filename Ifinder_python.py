@@ -8,15 +8,16 @@ from flask import Flask, render_template, request, redirect, url_for
 
 import firecall
 
-my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+
 
 from datetime import datetime
 
-class produto():
+class Produto():
     
     #"Classe utilizada para armazenar os dados de um produto"
     
-    def __init__(self,nomep,tipo,marca,data,local,observ,codigo,email,telefone):
+    def __init__(self,dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone):
+        self.dt = dt
         self.nomep = nomep
         self.tipo = tipo
         self.marca = marca
@@ -27,15 +28,23 @@ class produto():
         self.email = email
         self.telefone = telefone
         
+    def Salvar(self):
+        prod = {}
+        prod[self.dt]= self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
+        
+        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+        my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
+        
+    def Apagar(self):
+        
+        
+        
 
 #Dicionario que irá armazenar os objetos da classe produto
 #O codigo sera usada como chave
 
 DB = {}
-class salvar():
-    def __init__(self,lista):
-        lista = self.lista
-        my_firebase.put_sync(point = '/Produto' , data = lista)
+        
 #instrucao para a inicializacao do Flask
 app = Flask(__name__, static_url_path='')
 
@@ -67,8 +76,7 @@ def add():
         codigo = request.form['Codigo']
         email = request.form['Email']
         telefone = request.form['Telefone']
-        (dt, micro) = datetime.utcnow().strftime('%d-%m-%Y %H:%M:%S.%f').split('.')
-        dt = "%s.%03d" % (dt, int(micro) / 1000)
+        dt = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
         
          #Aqui uma pequena validacao dos dados inseridos.
         if codigo == '': 
@@ -78,8 +86,8 @@ def add():
             e = 'Objeto perdido já cadastrado! Porfavor use outro codigo de validação'  #Mensagem de erro
             return render_template('ifind.html', dic = DB, erro = e)            
         else:
-            DB[dt] = produto(nomep,tipo,marca,data,local,observ,codigo,email,telefone)
-            salvar(DB)
+            DB[dt] = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
+            DB[dt].Salvar()
     #Caso for chamado via GET ou apos terminar a insercao:
     return redirect(url_for('main'))
 
