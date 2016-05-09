@@ -61,7 +61,7 @@ def add():
         telefone = request.form['Telefone']
         
          #Aqui uma pequena validacao dos dados inseridos.
-        if codigo == '':# or email == '' or nomep == '':
+        if codigo == '': 
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
             return render_template('ifind.html', dic = DB, erro = e)
         elif codigo in DB:
