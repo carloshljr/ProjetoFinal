@@ -63,7 +63,7 @@ def add():
         if codigo == '' or email == '' or nomep == '':
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
             return render_template('ifind.html', dic = DB, erro = e)
-        elif nomep in DB:
+        elif codigo in DB:
             e = 'Objeto perdido já cadastrado!'  #Mensagem de erro
             return render_template('ifind.html', dic = DB, erro = e)            
         else:
@@ -72,10 +72,18 @@ def add():
     #Caso for chamado via GET ou apos terminar a insercao:
     return redirect(url_for('ifind'))
 
+@app.route('/validar', methods=['POST', 'GET'])
+def validar():
+    #Funcao que valida o produto
 
+    if request.method == 'POST':
+        
+        codigo = request.form['Codigo']
+        
+    
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
 #o deployment.
 if __name__ == '__main__':
-    app.run(debug=True, host= '0.0.0.0', port=5000)
+    app.run(debug=True, host= '0.0.0.0', port=5001)
