@@ -30,7 +30,7 @@ class Produto():
         
     def Salvar(self):
         prod = {}
-        prod[self.nomep]= self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
+        prod[self.nomep]= Produto(self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone)
         
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
@@ -55,6 +55,22 @@ def main():
 	#interpretar codigo, mas foi adaptado para utilizacao e geracao
 	#de conteudo dinamico.
 	#Abrir e ler o arquivo em algum editor de texto.
+    #Deve verificar o firebase, e mostrar o produtos no servidor
+    for i in range(len(dicionario)):
+        produto = #puxar do firebase todos os produtos
+        dt = produto.dt
+        nomep = produto.nomep
+        tipo = produto.tipo
+        marca = produto.marca
+        data = produto.data
+        local = produto.local
+        observ = produto.observ
+        codigo = produto.codigo
+        email = produto.email
+        telefone = produto.telefone
+    
+
+
     return render_template('ifind.html', dic = DB, erro = '')
     
 
@@ -96,14 +112,16 @@ def verificacao():
     if request.method == 'POST':
 
         codigov = request.form['CodigoV']
-        nomep = request.form['Nome']
-        codigo = DB[nomep]
+        dt = request.form.get('dt')#puxar do html o ddt
+        produto = my_firebase.get.sync(point = '/Produto/{0}'.format(self.dt) , data = prod)#puxar do firebase o produto
+        codigo =  produto.codigo #puxar o partir do dt o produto do firebase
+        
 
         #validacao dos dados inseridos
 
         if codigov == codigo:
             #liberar o email da pessoa que achou
-            email = True
+            email = produto.email
 
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
