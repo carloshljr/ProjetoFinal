@@ -30,7 +30,7 @@ class Produto():
         
     def Salvar(self):
         prod = {}
-        prod[self.dt]= self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
+        prod[self.nomep]= self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
         
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
