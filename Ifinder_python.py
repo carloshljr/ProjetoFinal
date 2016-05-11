@@ -112,17 +112,17 @@ def add():
 def verificacao():
     if request.method == 'POST':
 
-        codigov = request.form['CodigoV']
-        dt = request.form.get('dt')#puxar do html o dt
+        codigov = request.args['CodigoV']
+        dt = request.args['dt']#puxar do html o dt
         nomep = request.form.get('Nome')
-
+        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         codigo = my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,codigo))
 
         #validacao dos dados inseridos
 
         if codigov == codigo:
             #liberar o email da pessoa que achou
-            email = produto.email
+            email = my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,email))
 
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
