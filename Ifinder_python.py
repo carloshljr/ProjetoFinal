@@ -30,7 +30,7 @@ class Produto():
         
     def Salvar(self):
         prod = {}
-        prod[self.nomep]= Produto(self.dt,self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone)
+        prod[self.nomep]= self.dt,self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
         
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
@@ -57,18 +57,18 @@ def main():
 	#Abrir e ler o arquivo em algum editor de texto.
     #Deve verificar o firebase, e mostrar o produtos no servidor
     
-    for i in range(len(dicionario)):
-        produto = my_firebase.get.sync(point = '/Produto/{0}'.format(self.dt) , data = prod)#puxar do firebase o produto #puxar do firebase todos os produtos
-        dt = produto.dt
-        nomep = produto.nomep
-        tipo = produto.tipo
-        marca = produto.marca
-        data = produto.data
-        local = produto.local
-        observ = produto.observ
-        codigo = produto.codigo
-        email = produto.email
-        telefone = produto.telefone
+    #"""for i in range(len(dicionario)):
+       # produto = my_firebase.get.sync(point = '/Produto/{0}'.format(self.dt) , data = prod)#puxar do firebase o produto #puxar do firebase todos os produtos
+       # dt = produto.dt
+       # nomep = produto.nomep
+       # tipo = produto.tipo
+       # marca = produto.marca
+       # data = produto.data
+       # local = produto.local
+       # observ = produto.observ
+       # codigo = produto.codigo
+       # email = produto.email
+       # telefone = produto.telefone"""
     
 
 
@@ -114,9 +114,8 @@ def verificacao():
 
         codigov = request.form['CodigoV']
         dt = request.form.get('dt')#puxar do html o ddt
-        produto = my_firebase.get.sync(point = '/Produto/{0}'.format(self.dt) , data = prod)#puxar do firebase o produto
         codigo =  produto.codigo #puxar o partir do dt o produto do firebase
-        
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}')
 
         #validacao dos dados inseridos
 
