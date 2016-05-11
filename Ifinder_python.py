@@ -113,9 +113,10 @@ def verificacao():
     if request.method == 'POST':
 
         codigov = request.form['CodigoV']
-        dt = request.form.get('dt')#puxar do html o ddt
-        codigo =  produto.codigo #puxar o partir do dt o produto do firebase
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}')
+        dt = request.form.get('dt')#puxar do html o dt
+        nomep = request.form.get('Nome')
+
+        codigo = my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,codigo))
 
         #validacao dos dados inseridos
 
