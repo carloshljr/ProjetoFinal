@@ -123,7 +123,8 @@ def verificacao():
         if codigov == codigo:
             #liberar o email da pessoa que achou
             email = my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,email))
-
+        else:
+            e = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
