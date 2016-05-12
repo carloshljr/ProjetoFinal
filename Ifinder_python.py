@@ -35,7 +35,7 @@ class Produto():
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
         
-    def Apagar(self):
+    def Listar(self):
         
         pass
         
@@ -107,7 +107,13 @@ def add():
             DB[dt].Salvar()
     #Caso for chamado via GET ou apos terminar a insercao:
     return redirect(url_for('main'))
-
+@app.route('/produto', methods = ['POST', 'GET'])
+def abrir_produto():
+    nomep = request.args['Nome']
+    dt = request.args['dt']
+    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+    produto = my_firebase.get_sync(point = '/Produto/{0}/{1}'.format(dt,nomep))
+    
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
     if request.method == 'POST':
