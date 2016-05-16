@@ -112,7 +112,7 @@ def abrir_produto():
     nomep = request.args['Nome']
     dt = request.args['dt']
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-    produto = my_firebase.get_sync(point = '/Produto/{0}/{1}'.format(dt,nomep))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}'.format(dt,nomep))
     
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
@@ -122,13 +122,13 @@ def verificacao():
         dt = request.args['dt']#puxar do html o dt
         nomep = request.form.get('Nome')
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-        codigo = my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,codigo))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.codigo))
 
         #validacao dos dados inseridos
 
-        if codigov == codigo:
+        if codigov == Produto.codigo:
             #liberar o email da pessoa que achou
-            email = my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,email))
+            my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.email))
         else:
             e = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
