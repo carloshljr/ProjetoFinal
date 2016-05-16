@@ -69,7 +69,7 @@ def main():
 	#Abrir e ler o arquivo em algum editor de texto.
     #Deve verificar o firebase, e mostrar o produtos no servidor
     
-    #"""for i in range(len(dicionario)):
+    #for i in range(len(dicionario)):
        # produto = my_firebase.get.sync(point = '/Produto/{0}'.format(self.dt) , data = prod)#puxar do firebase o produto #puxar do firebase todos os produtos
        # dt = produto.dt
        # nomep = produto.nomep
@@ -80,7 +80,7 @@ def main():
        # observ = produto.observ
        # codigo = produto.codigo
        # email = produto.email
-       # telefone = produto.telefone"""
+       # telefone = produto.telefone
     
 
 
@@ -135,21 +135,21 @@ def abrir_produto():
     my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.email))
     my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.telefone))
     
-    DB[dt] = DB[dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
+    DB[dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
 
     nomep = DB[dt].nomep
     data = DB[dt].data
     local = DB[dt].local
     observ = DB[dt].observ
     marca = DB[dt].marca
-    return render_template('ifind,3.html', dic = DB, erro = '',dt = dt,nomep=nomep,data=data,local=local,observ=observ,marca=marca)
+    return render_template('ifind,3.html', dic = DB[dt], erro = '',dt = dt,nomep=nomep,data=data,local=local,observ=observ,marca=marca)
 
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
     if request.method == 'POST':
 
         codigov = request.form['CodigoV']
-        dt = request.args['dt']#puxar do html o dt
+        dt = request.args['dt']
         nomep = request.args['Nome']        
         
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
