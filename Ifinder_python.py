@@ -128,6 +128,7 @@ def verificacao():
             my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.email))
         else:
             e = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
+    return redirect(url_for('abrir_produto'))
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
