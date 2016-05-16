@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Ifinder - O achados e perdidos online</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="HTML KickStart is a ultra–lean set of HTML5, CSS, and jQuery (javascript) files, layouts, and elements designed to give you a headstart and save you a lot of hours on your next web project." />
+    <meta name="copyright" content="Joshua Gatcke 99lime.com All Rights Reserved" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="js/kickstart.js"></script> <!-- KICKSTART -->
+    <link rel="stylesheet" href="css/kickstart.css" media="all" /> <!-- KICKSTART -->
+    <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+</head>
+<body>
+  <h1 style="text-align: center; font-size: 90px; border: 1px solid black; background-color: green; color: white; font-family: A day without sun;"><strong>I</strong><em>Finder</em></h1>
+  <div id="header"></div>
+
+  <div class="grid">
+
+      <!-- Topo da pagina -->
+      <!-- O Kickstart permite dividir a pagina dinamicamente em 12 pedacos que se ajustam ao tamanho da tela do usuario -->
+      <!-- O campo class da TAG div indica quantas parcelas o painel ira ocupar -->
+
+
+      <!-- Criacao do componente Tab -->
+    <div class="col_1"></div>
+    <div class="col_10">
+      <ul class="tabs left">
+      <li><a href="#tabr1">Informa&ccedil;&otilde;es basicas</a></li>
+      <li><a href="#tabr2">Contato</a></li>
+      </ul>
+
+        <!-- Tab 1 - Listagem -->
+      <div id="tabr1" class="tab-content">
+        <div class="grid">
+          <div class="col_12">
+
+              <!-- Mensagem de erro. Caso a variavel erro (passada la no Python) for diferente de vazio, mostra um panel com erro -->
+            <!-- A sintaxe utilizada entre { % ... % } e derivada do Python e interpretada em tempo de execucao pelo Flask -->
+            <!-- A utilizacao de { { i } } imprime o valor da variavel, semelhante ao print() -->
+            <!-- Para maiores detalhes consultar: http://jinja.pocoo.org/docs/dev/ -->
+            {% if erro != '': %}
+              <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{ erro }}
+              <a href="#close" class="icon-remove"></a></div>
+            {% endif %} <!-- Como nao ha padrao de identacao em HTML, faz-se necessario indicar aonde termina o if -->
+
+
+              </tr></thead>
+              <tbody>
+                  <!-- Impressao dos dados do dicionario passado por parametro. -->
+                <!-- Nao esquecam que representa um dicionario de objetos da classe Veiculo. -->
+                <!-- Funcionamento analogo ao descrito acima -->
+                
+                <tr>
+                  <p> Nome : <td>{{ obj.nomep }}</td></p>
+                  <p> Tipo : <td>{{ obj.tipo }}</td><p>
+                  <p> Marca : <td>{{ obj.marca }}</td>
+                  <p> Data : <td>{{ obj.data }}</td></p>
+                  <p> Local Achado : <td>{{ obj.local }}</td></p>
+                  <p> Pergunta para a valida&ccedil;&atilde;o : <td>{{ obj.observ }}</td></p>
+
+
+                  <div class="col_12 right">
+                  <label for="CodigoV">Codigo</label>
+                  <input id="CodigoV" name="CodigoV" type="text" />
+                </div>
+
+                  <div class="col_12 right">
+                  <button class="medium"><i class="fa fa-Objeto"></i> Verificar</button></div>
+
+                  <!-- href vai indicar qual o endpoint sera utilizado via GET. -->
+                  <!-- O ? indica aonde comecam os arqumentos que serao passados. -->
+
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div id="tabr2" class="tab-content">
+        <div class="grid">
+          <div class="col_2"></div>
+          <div class="col_8">
+
+            <form class="vertical" method="POST" action="./produto">
+            <fieldset>
+
+              <div class="grid">
+
+                  <!-- Mensagem de erro. Caso a variavel erro (passada la no Python) for diferente de vazio, mostra um panel com erro -->
+                <!-- A sintaxe utilizada entre { % ... % } e derivada do Python e interpretada em tempo de execucao pelo Flask -->
+                <!-- A utilizacao de { { i } } imprime o valor da variavel, semelhante ao print() -->
+                <!-- Para maiores detalhes consultar: http://jinja.pocoo.org/docs/dev/ -->
+                {% if erro != '': %}
+                  <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{ erro }}
+                  <a href="#close" class="icon-remove"></a></div>
+                {% endif %} <!-- Como nao ha padrao de identacao em HTML, faz-se necessario indicar aonde termina o if -->
+
+
+                  </tr></thead>
+                  <tbody>
+                      <!-- Impressao dos dados do dicionario passado por parametro. -->
+                    <!-- Nao esquecam que representa um dicionario de objetos da classe Veiculo. -->
+                    <!-- Funcionamento analogo ao descrito acima -->
+                    
+                    <tr>
+                      <p>Email : <td>{{ obj.email }}</td></p>
+                      <p>Telefone : <td>{{ obj.telefone }}</td></p>
+
+
+                      <!-- href vai indicar qual o endpoint sera utilizado via GET. -->
+                      <!-- O ? indica aonde comecam os arqumentos que serao passados. -->
+
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+  <!-- Rodape: -->
+
+  <div class="clear"></div>
+  <div id="footer">
+  &copy; Copyright 2016 All Rights Reserved. This website was built with <a href="http://www.99lime.com">HTML KickStart</a>
+  </div>
+
+  <!-- Fim das instrucoes -->
+  </body></html>
