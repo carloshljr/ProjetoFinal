@@ -37,7 +37,19 @@ class Produto():
         
     def Listar(self):
         
-        pass
+        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.dt))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.nomep))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.tipo))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.marca))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.data))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.local))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.observ))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.codigo)
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.email))
+        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.telefone))
+        return DB[dt] = DB[dt] = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
+
         
 
 #Dicionario que irá armazenar os objetos da classe produto
@@ -109,15 +121,34 @@ def add():
     return redirect(url_for('main'))
 @app.route('/produto', methods = ['POST', 'GET'])
 def abrir_produto():
+    dt = request.args['dt']
+    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.dt))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.nomep))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.tipo))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.marca))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.data))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.local))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.observ))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.codigo)
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.email))
+    my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.telefone))
+    DB[dt] = DB[dt] = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
+
+    nomep = DB[dt].nomep
+    data = DB[dt].data
+    local = DB[dt].local
+    observ = DB[dt].observ
+    marca = DB[dt].marca
     return render_template('ifind,3.html', dic = DB, erro = '')
 
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
     if request.method == 'POST':
 
-        codigov = request.args['CodigoV']
+        codigov = request.form['CodigoV']
         dt = request.args['dt']#puxar do html o dt
-        nomep = request.form.get('Nome')
+        
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.codigo))
 
