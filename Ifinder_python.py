@@ -109,12 +109,8 @@ def add():
     return redirect(url_for('main'))
 @app.route('/produto', methods = ['POST', 'GET'])
 def abrir_produto():
-    nomep = request.args['Nome']
-    dt = request.args['dt']
-    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-    my_firebase.get_sync(point = '/Produto/{0}/{1}'.format(dt,nomep))
     return render_template('ifind,3.html', dic = DB, erro = '')
-    
+
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
     if request.method == 'POST':
