@@ -142,7 +142,7 @@ def abrir_produto():
     local = DB[dt].local
     observ = DB[dt].observ
     marca = DB[dt].marca
-    return render_template('ifind,3.html', dic = DB[dt], erro = '',dt = dt,nomep=nomep,data=data,local=local,observ=observ,marca=marca)
+    return render_template('ifind3.html', dic = DB[dt], erro = '',dt = dt,nomep=nomep,data=data,local=local,observ=observ,marca=marca)
 
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
