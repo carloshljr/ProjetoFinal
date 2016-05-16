@@ -113,6 +113,7 @@ def abrir_produto():
     dt = request.args['dt']
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     my_firebase.get_sync(point = '/Produto/{0}/{1}'.format(dt,nomep))
+    return render_template('ifind,3.html', dic = DB, erro = '')
     
 @app.route('/verifica', methods=['POST', 'GET'])
 def verificacao():
