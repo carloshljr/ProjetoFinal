@@ -69,16 +69,6 @@ def main():
 	#Abrir e ler o arquivo em algum editor de texto.
     #Deve verificar o firebase, e mostrar o produtos no servidor
     
-   # for i in range(len(eval(my_firebase.get_sync(point = '/Produto/')))):
-        #prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
-        #D=[]
-        #for e in prod.values():
-            #for i in e:
-                #D.append(i)
-    
-            #objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-
-
     #for i in range(len(dicionario)):
        # produto = my_firebase.get.sync(point = '/Produto/{0}'.format(self.dt) , data = prod)#puxar do firebase o produto #puxar do firebase todos os produtos
        # dt = produto.dt
@@ -132,12 +122,20 @@ def add():
 @app.route('/produto/', methods = ['POST', 'GET'])
 def abrir_produto():
     dt = request.args['dt']
-    
+    #nomep = request.args['Nome']
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
 
-  
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.dt))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.nomep))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.tipo))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.marca))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.data))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.local))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.observ))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.codigo))
+    #my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.email))
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
-    
+    print(prod)
 
     #Converter de prod (dicionario) para obj da classe produto
     D=[]
@@ -146,8 +144,7 @@ def abrir_produto():
             D.append(i)
     print(D)
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    
-
+    print(objet)
     #DB[dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
 
     return render_template('ifind3.html', obj= objet)
