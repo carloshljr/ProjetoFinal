@@ -125,8 +125,9 @@ def abrir_produto():
     #nomep = request.args['Nome']
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
 
+
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
-    print(prod)
+    
 
     #Converter de prod (dicionario) para obj da classe produto
     D=[]
