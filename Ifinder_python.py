@@ -51,6 +51,24 @@ class Produto():
         
 
         
+def lista_produto():
+    #Criando os produtos que ja estavam no firebase 
+    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+    prod = eval(my_firebase.get_sync(point = '/Produto'))
+    #print(len(prod),prod)       
+    Total = []
+    for i in prod.values():
+        #print(i)
+        for e in i.values():
+            #print(e)
+            informacoes = []
+            for x in e:
+                informacoes.append(x)
+            produto = Produto(informacoes[0],informacoes[1],informacoes[2],informacoes[3],informacoes[4],informacoes[5],informacoes[6],informacoes[7],informacoes[8],informacoes[9])
+            Total.append(produto)
+                
+    return Total
+        #Adicionando o produto na lista do DB
 
 #Dicionario que irá armazenar os objetos da classe produto
 #O codigo sera usada como chave
@@ -68,29 +86,14 @@ def main():
 	#de conteudo dinamico.
 	#Abrir e ler o arquivo em algum editor de texto.
     #Deve verificar o firebase, e mostrar o produtos no servidor
-    
-    
-    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-    prod = eval(my_firebase.get_sync(point = '/Produto'))
-    #print(len(prod),prod)
-    
-    #Criando os produtos que ja estavam no firebase
-    Total = []
-    for i in prod.values():
-        #print(i)
-        for e in i.values():
-            #print(e)
-            informacoes = []
-            for x in e:
-                informacoes.append(x)
-            produto = Produto(informacoes[0],informacoes[1],informacoes[2],informacoes[3],informacoes[4],informacoes[5],informacoes[6],informacoes[7],informacoes[8],informacoes[9])
-            Total.append(produto)
-    
-    #Adicionando o produto na lista do DB
+
+
+    Total = lista_produto()
     for i in Total:
         nomep = i.nomep
         DB[nomep]=i
-    
+
+
     return render_template('ifind.html', dic = DB, erro = '')
     
 
