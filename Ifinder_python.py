@@ -62,28 +62,35 @@ app = Flask(__name__, static_url_path='')
 
 @app.route('/')
 def main():
-	#A funcao abaixo vai ler e renderizar o arquivo HTML abaixo,
+    #A funcao abaixo vai ler e renderizar o arquivo HTML abaixo,
 	#passando os parametros dic e erro. Por padrao, HTML nao sabe
 	#interpretar codigo, mas foi adaptado para utilizacao e geracao
 	#de conteudo dinamico.
 	#Abrir e ler o arquivo em algum editor de texto.
     #Deve verificar o firebase, e mostrar o produtos no servidor
     
-    #for i in range(len(dicionario)):
-       # produto = my_firebase.get.sync(point = '/Produto/{0}'.format(self.dt) , data = prod)#puxar do firebase o produto #puxar do firebase todos os produtos
-       # dt = produto.dt
-       # nomep = produto.nomep
-       # tipo = produto.tipo
-       # marca = produto.marca
-       # data = produto.data
-       # local = produto.local
-       # observ = produto.observ
-       # codigo = produto.codigo
-       # email = produto.email
-       # telefone = produto.telefone
-        
-
-
+    
+    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+    prod = eval(my_firebase.get_sync(point = '/Produto'))
+    #print(len(prod),prod)
+    
+    #Criando os produtos que ja estavam no firebase
+    Total = []
+    for i in prod.values():
+        #print(i)
+        for e in i.values():
+            #print(e)
+            informacoes = []
+            for x in e:
+                informacoes.append(x)
+            produto = Produto(informacoes[0],informacoes[1],informacoes[2],informacoes[3],informacoes[4],informacoes[5],informacoes[6],informacoes[7],informacoes[8],informacoes[9])
+            Total.append(produto)
+    
+    #Adicionando o produto na lista do DB
+    for i in Total:
+        nomep = i.nomep
+        DB[nomep]=i
+    
     return render_template('ifind.html', dic = DB, erro = '')
     
 
@@ -134,7 +141,7 @@ def abrir_produto():
     for e in prod.values():
         for i in e:
             D.append(i)
-    print(D)
+    
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
     print(objet)
     #DB[dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
