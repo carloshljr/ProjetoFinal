@@ -21,7 +21,7 @@
      <div class="col_10">
        <ul class="tabs left">
        <li><a href="#tabr1">Informa&ccedil;&otilde;es basicas</a></li>
-       <li><a href="#tabr2">Contato</a></li>
+
        </ul>
 
          <!-- Tab 1 - Listagem -->
@@ -38,20 +38,22 @@
                <a href="#close" class="icon-remove"></a></div>
 
 
-   <thead>
+
 
             {% endif %} <!-- Como nao ha padrao de identacao em HTML, faz-se necessario indicar aonde termina o if -->
 
+    <thead>
 
               </tr></thead>
               <tbody>
-                <form class="vertical" method="POST" action="./Verifica">
+                <form class="vertical" method="POST" action="./produto">
                 <fieldset>
                   <!-- Impressao dos dados do dicionario passado por parametro. -->
                 <!-- Nao esquecam que representa um dicionario de objetos da classe Veiculo. -->
                 <!-- Funcionamento analogo ao descrito acima -->
 
                 <tr>
+                  <h2>Produto</h2>
                   <p> Nome : <td>{{ obj.nomep }}</td></p>
                   <p> Tipo : <td>{{ obj.tipo }}</td><p>
                   <p> Marca : <td>{{ obj.marca }}</td>
@@ -82,50 +84,6 @@
 
 
 
-
-      <div id="tabr2" class="tab-content">
-        <div class="grid">
-          <div class="col_2"></div>
-          <div class="col_8">
-
-            <form class="vertical" method="POST" action="./produto">
-            <fieldset>
-
-              <div class="grid">
-
-                  <!-- Mensagem de erro. Caso a variavel erro (passada la no Python) for diferente de vazio, mostra um panel com erro -->
-                <!-- A sintaxe utilizada entre { % ... % } e derivada do Python e interpretada em tempo de execucao pelo Flask -->
-                <!-- A utilizacao de { { i } } imprime o valor da variavel, semelhante ao print() -->
-                <!-- Para maiores detalhes consultar: http://jinja.pocoo.org/docs/dev/ -->
-                {% if erro != '': %}
-                  <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{ erro }}
-                  <a href="#close" class="icon-remove"></a></div>
-                {% endif %} <!-- Como nao ha padrao de identacao em HTML, faz-se necessario indicar aonde termina o if -->
-
-
-                  </tr></thead>
-                  <tbody>
-                      <!-- Impressao dos dados do dicionario passado por parametro. -->
-                    <!-- Nao esquecam que representa um dicionario de objetos da classe Veiculo. -->
-                    <!-- Funcionamento analogo ao descrito acima -->
-
-                    <thead>
-                    <tr>
-                      <p>Email : <td>{{ obj.email }}</td></p>
-                      <p>Telefone : <td>{{ obj.telefone }}</td></p>
-
-
-                      <!-- href vai indicar qual o endpoint sera utilizado via GET. -->
-                      <!-- O ? indica aonde comecam os arqumentos que serao passados. -->
-
-                    </tr>
-
-                  </tbody>
-              
-               </fieldset>
-              </div>
-            </div>
-          </div>
 
 
   <!-- Rodape: -->
