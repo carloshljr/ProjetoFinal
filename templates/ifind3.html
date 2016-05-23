@@ -7,48 +7,46 @@
     <meta name="description" content="HTML KickStart is a ultra–lean set of HTML5, CSS, and jQuery (javascript) files, layouts, and elements designed to give you a headstart and save you a lot of hours on your next web project." />
     <meta name="copyright" content="Joshua Gatcke 99lime.com All Rights Reserved" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="js/kickstart.js"></script> <!-- KICKSTART -->
-    <link rel="stylesheet" href="css/kickstart.css" media="all" /> <!-- KICKSTART -->
-    <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+    <script src="{{ url_for('static',filename='js/kickstart.js') }}"></script> <!-- KICKSTART -->
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/kickstart.css') }}" media="all" /> <!-- KICKSTART -->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='stylesheet.css') }}"/>
 </head>
 <body>
   <h1 style="text-align: center; font-size: 90px; border: 1px solid black; background-color: green; color: white; font-family: A day without sun;"><strong>I</strong><em>Finder</em></h1>
 
+   <div id="header"></div>
+   <div class="grid">
 
-  <div id="header"></div>
+     <div class="col_1"></div>
+     <div class="col_10">
+       <ul class="tabs left">
+       <li><a href="#tabr1">Informa&ccedil;&otilde;es basicas</a></li>
+       <li><a href="#tabr2">Contato</a></li>
+       </ul>
 
-  <div class="grid">
+         <!-- Tab 1 - Listagem -->
+       <div id="tabr1" class="tab-content">
+         <div class="grid">
+           <div class="col_12">
 
-      <!-- Topo da pagina -->
-      <!-- O Kickstart permite dividir a pagina dinamicamente em 12 pedacos que se ajustam ao tamanho da tela do usuario -->
-      <!-- O campo class da TAG div indica quantas parcelas o painel ira ocupar -->
+               <!-- Mensagem de erro. Caso a variavel erro (passada la no Python) for diferente de vazio, mostra um panel com erro -->
+             <!-- A sintaxe utilizada entre { % ... % } e derivada do Python e interpretada em tempo de execucao pelo Flask -->
+             <!-- A utilizacao de { { i } } imprime o valor da variavel, semelhante ao print() -->
+             <!-- Para maiores detalhes consultar: http://jinja.pocoo.org/docs/dev/ -->
+             {% if erro != '': %}
+               <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{ erro }}
+               <a href="#close" class="icon-remove"></a></div>
 
 
-      <!-- Criacao do componente Tab -->
-    <div class="col_1"></div>
-    <div class="col_10">
-      <ul class="tabs left">
-      <li><a href="#tabr1">Informa&ccedil;&otilde;es basicas</a></li>
-      <li><a href="#tabr2">Contato</a></li>
-      </ul>
+   <thead>
 
-        <!-- Tab 1 - Listagem -->
-      <div id="tabr1" class="tab-content">
-        <div class="grid">
-          <div class="col_12">
-
-              <!-- Mensagem de erro. Caso a variavel erro (passada la no Python) for diferente de vazio, mostra um panel com erro -->
-            <!-- A sintaxe utilizada entre { % ... % } e derivada do Python e interpretada em tempo de execucao pelo Flask -->
-            <!-- A utilizacao de { { i } } imprime o valor da variavel, semelhante ao print() -->
-            <!-- Para maiores detalhes consultar: http://jinja.pocoo.org/docs/dev/ -->
-            {% if erro != '': %}
-              <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{ erro }}
-              <a href="#close" class="icon-remove"></a></div>
             {% endif %} <!-- Como nao ha padrao de identacao em HTML, faz-se necessario indicar aonde termina o if -->
 
 
               </tr></thead>
               <tbody>
+                <form class="vertical" method="POST" action="./Verifica">
+                <fieldset>
                   <!-- Impressao dos dados do dicionario passado por parametro. -->
                 <!-- Nao esquecam que representa um dicionario de objetos da classe Veiculo. -->
                 <!-- Funcionamento analogo ao descrito acima -->
@@ -61,11 +59,12 @@
                   <p> Local Achado : <td>{{ obj.local }}</td></p>
                   <p> Pergunta para a valida&ccedil;&atilde;o : <td>{{ obj.observ }}</td></p>
 
-
-                  <div class="col_12 right">
-                  <label for="CodigoV">Codigo</label>
+                  <div class="col_9"></div>
+                  <div class="col_3 right">
+                  <label for="CodigoV">Verifica&ccedil;&atilde;o : </label>
                   <input id="CodigoV" name="CodigoV" type="text" />
-                </div>
+                  </div>
+
 
                   <div class="col_12 right">
                   <button class="medium"><i class="fa fa-Objeto"></i> Verificar</button></div>
@@ -73,10 +72,10 @@
                   <!-- href vai indicar qual o endpoint sera utilizado via GET. -->
                   <!-- O ? indica aonde comecam os arqumentos que serao passados. -->
 
-                </tr>
-
-              </tbody>
-            </table>
+                 </tr>
+                </fieldset>
+               </form>
+            </tbody>
           </div>
         </div>
       </div>
@@ -110,6 +109,7 @@
                     <!-- Nao esquecam que representa um dicionario de objetos da classe Veiculo. -->
                     <!-- Funcionamento analogo ao descrito acima -->
 
+                    <thead>
                     <tr>
                       <p>Email : <td>{{ obj.email }}</td></p>
                       <p>Telefone : <td>{{ obj.telefone }}</td></p>
@@ -121,7 +121,8 @@
                     </tr>
 
                   </tbody>
-                </table>
+              
+               </fieldset>
               </div>
             </div>
           </div>
