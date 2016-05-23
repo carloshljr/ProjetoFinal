@@ -152,9 +152,13 @@ def abrir_produto():
     
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
     
-    #DB[dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
+    if codigov == objet.codigo:
+        #liberar o email da pessoa que achou
+        return render_template('ifind4.html', obj= objet)
+    else:
+        error = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente'
 
-    return render_template('ifind3.html', obj= objet)
+    return render_template('ifind3.html', obj= objet, erro = error)
 
 
 @app.route('/verifica', methods=['POST', 'GET'])
@@ -179,12 +183,7 @@ def verificacao():
                 D.append(i)
     
         objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-        #validacao dos dados inseridos
-        if codigov == objet.codigo:
-            #liberar o email da pessoa que achou
-            objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-        else:
-            error = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
+        
         return render_template('ifind4.html', obj= objet,erro = error)
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
