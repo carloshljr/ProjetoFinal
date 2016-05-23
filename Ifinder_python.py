@@ -146,10 +146,10 @@ def abrir_produto():
             D.append(i)
     
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    print(objet)
+    
     #DB[dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
 
-    return render_template('ifind3.html', obj= objet, erro = e)
+    return render_template('ifind3.html', obj= objet)
 
 
 @app.route('/verifica', methods=['POST', 'GET'])
@@ -158,19 +158,29 @@ def verificacao():
 
         codigov = request.form['CodigoV']
         dt = request.args['dt']
-        nomep = request.args['Nome']        
+            
         
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.codigo))
+        
 
+
+        prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
+    
+
+        #Converter de prod (dicionario) para obj da classe produto
+        D=[]
+        for e in prod.values():
+            for i in e:
+                D.append(i)
+    
+        
         #validacao dos dados inseridos
-
         if codigov == Produto.codigo:
             #liberar o email da pessoa que achou
-            my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(dt,nomep,Produto.email))
+            objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
         else:
-            e = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
-    return redirect(url_for('abrir_produto'))
+            error = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
+        return render_template('ifind3.html', obj= objet,errp = error)
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
