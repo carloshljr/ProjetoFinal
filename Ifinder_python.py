@@ -72,15 +72,30 @@ def main():
 	#de conteudo dinamico.
 	#Abrir e ler o arquivo em algum editor de texto.
     #Deve verificar o firebase, e mostrar o produtos no servidor
+#Criando os produtos que ja estavam no firebase 
+    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+    prod = my_firebase.get_sync(point = '/Produto')
+    #print(len(prod),prod)
+    if prod == b'null':
+        Total = []
+    else:
+        prod = eval(prod)        
+        Total = []
+        for i in prod.values():
+            #print(i)
+            for e in i.values():
+                #print(e)
+                informacoes = []
+                for x in e:
+                    informacoes.append(x)
+                produto = Produto(informacoes[0],informacoes[1],informacoes[2],informacoes[3],informacoes[4],informacoes[5],informacoes[6],informacoes[7],informacoes[8],informacoes[9])
+                Total.append(produto)
 
-
-    Total = lista_produto()
     
-    #if Total == null:
+    
     for i in Total:
         nomep = i.nomep
         DB[nomep]=i
-    #else:
         
 
     return render_template('ifind.html', dic = DB, erro = '')
@@ -169,7 +184,7 @@ def verificacao():
             objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
         else:
             error = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
-        return render_template('ifind3.html', obj= objet,erro = error)
+        return render_template('ifind4.html', obj= objet,erro = error)
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
