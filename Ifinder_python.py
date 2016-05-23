@@ -75,10 +75,13 @@ def main():
 
 
     Total = lista_produto()
+    
+    #if Total == null:
     for i in Total:
         nomep = i.nomep
         DB[nomep]=i
-
+    #else:
+        
 
     return render_template('ifind.html', dic = DB, erro = '')
     
@@ -159,17 +162,17 @@ def verificacao():
             for i in e:
                 D.append(i)
     
-        
+        objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
         #validacao dos dados inseridos
-        if codigov == Produto.codigo:
+        if codigov == objet.codigo:
             #liberar o email da pessoa que achou
             objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
         else:
             error = 'O codigo que vc inseriu não confere! Por favor tente novamente.'
-        return render_template('ifind3.html', obj= objet,errp = error)
+        return render_template('ifind3.html', obj= objet,erro = error)
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
 #o deployment.
 if __name__ == '__main__':
-    app.run(debug=True, host= '0.0.0.0', port=5320)
+    app.run(debug=True, host= '0.0.0.0', port=5321)
