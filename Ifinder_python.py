@@ -34,21 +34,7 @@ class Produto():
         
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
-        
-    def Listar(self):
-        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep, Produto.dt))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.nomep))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.tipo))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.marca))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.data))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.local))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.observ))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.codigo))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.email))
-        my_firebase.get_sync(point = '/Produto/{0}/{1}/{2}'.format(self.dt,self.nomep,Produto.telefone))
-        DB[self.dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
-        
+    
 
         
 def lista_produto():
