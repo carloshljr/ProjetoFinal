@@ -95,6 +95,7 @@ def main():
     
     for i in Total:
         nomep = i.nomep
+        
         DB[nomep]=i
         
 
@@ -129,8 +130,8 @@ def add():
             e = 'Objeto perdido já cadastrado! Porfavor use outro codigo de validação'  #Mensagem de erro
             return render_template('ifind.html', dic = DB, erro = e)            
         else:
-            DB[dt] = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
-            DB[dt].Salvar()
+            Produto1 = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
+            Produto1.Salvar()
     #Caso for chamado via GET ou apos terminar a insercao:
     return redirect(url_for('main'))
 @app.route('/produto/', methods = ['POST', 'GET'])
