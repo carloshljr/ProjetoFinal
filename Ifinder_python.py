@@ -149,7 +149,7 @@ def abrir_produto():
     print(objet)
     #DB[dt] = Produto(Produto.dt, Produto.nomep,Produto.tipo,Produto.marca,Produto.data,Produto.local,Produto.observ,Produto.codigo,Produto.email,Produto.telefone)
 
-    return render_template('ifind3.html', obj= objet)
+    return render_template('ifind3.html', obj= objet, erro = e)
 
 
 @app.route('/verifica', methods=['POST', 'GET'])
