@@ -126,7 +126,7 @@ def add():
         if codigo == '': 
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
             # print(2)
-             return render_template('ifind.html', dic = DB, erro = e)
+            return render_template('ifind.html', dic = DB, erro = e)
         elif codigo in DB:
             e = 'Objeto perdido já cadastrado! Porfavor use outro codigo de validação'  #Mensagem de erro
             # print(3)
@@ -155,25 +155,26 @@ def abrir_produto():
             D.append(i)
     
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    print(0)
+    # print(0)
     #Tentar a insercao apenas quando vier via POST
-    if request.method == 'GET':
-    #Caso for chamado via GET ou apos terminar a insercao:
-        print(11)
-        return render_template('ifind3.html', obj= objet, erro = '')
-    else:
-        print(1)
-        codigov = request.form['CodigoV']
-         #Aqui uma pequena validacao dos dados inseridos.
-        if codigoV != codigo: 
-            e = error = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente' #Mensagem de erro
-            print(2)
-            return render_template('ifind3.html', obj= objet, erro = e)          
-        else:
-            print(4)
-            return render_template('ifind4.html', obj= objet)
-@app.route('/verifica', methods=['POST', 'GET'])
-def mostrar_contato():   
+    # if request.method == 'GET':
+    # #Caso for chamado via GET ou apos terminar a insercao:
+    #     print(11)
+    #     return render_template('ifind3.html', obj= objet, erro = '')
+    # else:
+    #     print(1)
+    #     codigov = request.form['CodigoV']
+    #      #Aqui uma pequena validacao dos dados inseridos.
+    #     if codigoV != codigo: 
+    #         e = error = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente' #Mensagem de erro
+    #         print(2)
+    #         return render_template('ifind3.html', obj= objet, erro = e)          
+
+
+    return render_template('ifind3.html', obj= objet, erro = '')
+@app.route('/produto/verifica', methods=['POST', 'GET'])
+def mostrar_contato():
+
     dt = request.args['dt']        
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
@@ -183,10 +184,18 @@ def mostrar_contato():
     for e in prod.values():
         for i in e:
             D.append(i)
-    
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    print(objet)
-    return render_template('ifind4.html', obj= objet)
+    if request.method == 'POST':
+        print(1)
+        codigov = request.form['CodigoV']
+         #Aqui uma pequena validacao dos dados inseridos.
+        if codigoV == codigo: 
+            print(2)
+            return render_template('ifind4.html', obj= objet) 
+    else:
+        e = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente' #Mensagem de erro
+        print(objet)
+        return render_template('ifind3.html', obj= objet, erro = e)
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
