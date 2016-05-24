@@ -35,18 +35,24 @@ class Produto():
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
     
+    def Salvar_em_Achados(self):
+        prod = {}
+        prod[self.nomep]= self.dt,self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
+        
+        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+        my_firebase.put_sync(point = '/Achado/{0}'.format(self.dt) , data = prod)
 
         
 def lista_produto():
     #Criando os produtos que ja estavam no firebase 
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     prod = eval(my_firebase.get_sync(point = '/Produto'))
-    #print(len(prod),prod)       
+    # print(len(prod),prod)       
     Total = []
     for i in prod.values():
-        #print(i)
+        # print(i)
         for e in i.values():
-            #print(e)
+            # print(e)
             informacoes = []
             for x in e:
                 informacoes.append(x)
@@ -75,16 +81,16 @@ def main():
 #Criando os produtos que ja estavam no firebase 
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     prod = my_firebase.get_sync(point = '/Produto')
-    #print(len(prod),prod)
+    # print(len(prod),prod)
     if prod == b'null':
         Total = []
     else:
         prod = eval(prod)        
         Total = []
         for i in prod.values():
-            #print(i)
+            # print(i)
             for e in i.values():
-                #print(e)
+                # print(e)
                 informacoes = []
                 for x in e:
                     informacoes.append(x)
@@ -133,7 +139,7 @@ def add():
             return render_template('ifind.html', dic = DB, erro = e)            
         else:
             # print(4)
-            Produto1 = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
+            Produto1 = Produto(dt,nomep,tipo,marca,data,local,observ,codigo.lower(),email,telefone)
             Produto1.Salvar()
     #Caso for chamado via GET ou apos terminar a insercao:
     # print(11)
@@ -141,7 +147,7 @@ def add():
 @app.route('/produto/', methods = ['POST', 'GET'])
 def abrir_produto():
     dt = request.args['dt']
-    print('o dt vale = ',dt)
+    # print('o dt vale = ',dt)
     
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
 
@@ -155,32 +161,16 @@ def abrir_produto():
             D.append(i)
     
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    # print(0)
-    #Tentar a insercao apenas quando vier via POST
-    # if request.method == 'GET':
-    # #Caso for chamado via GET ou apos terminar a insercao:
-    #     print(11)
-    #     return render_template('ifind3.html', obj= objet, erro = '')
-    # else:
-    #     print(1)
-    #     codigov = request.form['CodigoV']
-    #      #Aqui uma pequena validacao dos dados inseridos.
-    #     if codigoV != codigo: 
-    #         e = error = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente' #Mensagem de erro
-    #         print(2)
-    #         return render_template('ifind3.html', obj= objet, erro = e)          
-
 
     return render_template('ifind3.html', obj= objet, erro = '')
 @app.route('/verifica', methods=['POST', 'GET'])
 def mostrar_contato():
-    print('mostrar_contato')
+    # print('mostrar_contato')
     dt = request.args['dt'] 
-    print('pega o dt',dt)
-    dt = request.args['dt']        
+    # print('pega o dt',dt)      
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
-    print('pega o  produto')
+    # print('pega o  produto')
 
 
     #Converter de prod (dicionario) para obj da classe produto
@@ -189,23 +179,46 @@ def mostrar_contato():
         for i in e:
             D.append(i)
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    print('monta o objeto')
+    # print('monta o objeto')
     if request.method == 'POST':
-        print('recebe o post')
+        # print('recebe o post')
         codigov = request.form['CodigoV']
-        print('recebe o codigo',codigov)
+        # print('recebe o codigo',codigov)
 
-
-         #Aqui uma pequena validacao dos dados inseridos.
-        if codigov == objet.codigo: 
-            print('valida')
+        #Aqui uma pequena validacao dos dados inseridos.
+        if codigov.lower() == objet.codigo.lower(): 
+            # print('valida')
             return render_template('ifind4.html', obj= objet) 
         else:
             e = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente.' #Mensagem de erro
-            print(objet)
+            # print(objet)
             return render_template('ifind3.html', obj= objet,erro = e)
     else:
         return render_template('ifind3.html', obj= objet,erro = '')
+
+@app.route('/del', methods=['POST', 'GET'])
+def deletar():
+    dt = request.args['dt']
+    print('Pega o dt = ',dt) 
+
+    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+    prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
+    print('Acha o produto:',produto)
+
+    D=[]
+    for e in prod.values():
+        for i in e:
+            D.append(i)
+    
+    objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
+    objet.Salvar_em_Achados
+    print('Monta o objeto:', D)
+
+    my_firebase.delete_sync('/Produto/{0}'.format(dt))
+    print('Deleta no firebase')
+    
+    return redirect(url_for('main'))
+        
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
