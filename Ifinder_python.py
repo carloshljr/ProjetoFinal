@@ -203,7 +203,7 @@ def deletar():
 
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
-    print('Acha o produto:',produto)
+    print('Acha o produto:',prod)
 
     D=[]
     for e in prod.values():
