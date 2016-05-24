@@ -107,10 +107,10 @@ def main():
 #novamente utiliza-se a variavel request para recuperar os dados.    
 @app.route('/add', methods=['POST', 'GET'])
 def add():
-    print(0)
+    # print(0)
     #Tentar a insercao apenas quando vier via POST
-    if request.method == 'Post':
-        print(1)
+    if request.method == 'POST':
+        # print(1)
         nomep = request.form['Nome']
         tipo = request.form['Tipo']
         marca = request.form['Marca']
@@ -125,18 +125,18 @@ def add():
          #Aqui uma pequena validacao dos dados inseridos.
         if codigo == '': 
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
-            print(2)
-            return render_template('ifind.html', dic = DB, erro = e)
+            # print(2)
+             return render_template('ifind.html', dic = DB, erro = e)
         elif codigo in DB:
             e = 'Objeto perdido já cadastrado! Porfavor use outro codigo de validação'  #Mensagem de erro
-            print(3)
+            # print(3)
             return render_template('ifind.html', dic = DB, erro = e)            
         else:
-            print(4)
+            # print(4)
             Produto1 = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
             Produto1.Salvar()
     #Caso for chamado via GET ou apos terminar a insercao:
-    print(11)
+    # print(11)
     return redirect(url_for('main'))
 @app.route('/produto/', methods = ['POST', 'GET'])
 def abrir_produto():
