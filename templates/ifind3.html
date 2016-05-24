@@ -33,13 +33,10 @@
              <!-- A sintaxe utilizada entre { % ... % } e derivada do Python e interpretada em tempo de execucao pelo Flask -->
              <!-- A utilizacao de { { i } } imprime o valor da variavel, semelhante ao print() -->
              <!-- Para maiores detalhes consultar: http://jinja.pocoo.org/docs/dev/ -->
-
-
-
-
-
-
-           <!-- Como nao ha padrao de identacao em HTML, faz-se necessario indicar aonde termina o if -->
+             {% if erro != '': %}
+              <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{ erro }}
+              <a href="#close" class="icon-remove"></a></div>
+             {% endif %} <!-- Como nao ha padrao de identacao em HTML, faz-se necessario indicar aonde termina o if -->
 
     <thead>
 

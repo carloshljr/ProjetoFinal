@@ -152,44 +152,36 @@ def abrir_produto():
             D.append(i)
     
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
+    
+    
 
 #Verificacao de dados
     if request.method == 'POST':
 
         codigov = request.form['CodigoV']
-        
+
         if codigov == objet.codigo:
             #liberar o email da pessoa que achou
             return render_template('ifind4.html', obj= objet)
         else:
             error = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente'
-
-    return render_template('ifind3.html', obj= objet)
+            return render_template('ifind3.html', obj= objet, erro = error)  
+    return render_template('ifind3.html', obj= objet, erro = '')
 
 @app.route('/verifica', methods=['POST', 'GET'])
-def verificacao():
-    if request.method == 'POST':
+def mostrar_contato():            
+    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+    prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
 
-        codigov = request.form['CodigoV']
-        dt = request.args['dt']
-            
-        
-        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-        
-
-
-        prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
+    #Converter de prod (dicionario) para obj da classe produto
+    D=[]
+    for e in prod.values():
+        for i in e:
+            D.append(i)
     
-
-        #Converter de prod (dicionario) para obj da classe produto
-        D=[]
-        for e in prod.values():
-            for i in e:
-                D.append(i)
-    
-        objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
+    objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
         
-        return render_template('ifind4.html', obj= objet)
+    return render_template('ifind4.html', obj= objet)
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
 #aconselhavel deixar o modo debug ligado. Desligar quando for realizar
