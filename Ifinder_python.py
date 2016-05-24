@@ -107,10 +107,10 @@ def main():
 #novamente utiliza-se a variavel request para recuperar os dados.    
 @app.route('/add', methods=['POST', 'GET'])
 def add():
-    
+    print(0)
     #Tentar a insercao apenas quando vier via POST
-    if request.method == 'POST':
-    
+    if request.method == 'Post':
+        print(1)
         nomep = request.form['Nome']
         tipo = request.form['Tipo']
         marca = request.form['Marca']
@@ -125,14 +125,18 @@ def add():
          #Aqui uma pequena validacao dos dados inseridos.
         if codigo == '': 
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
+            print(2)
             return render_template('ifind.html', dic = DB, erro = e)
         elif codigo in DB:
             e = 'Objeto perdido já cadastrado! Porfavor use outro codigo de validação'  #Mensagem de erro
+            print(3)
             return render_template('ifind.html', dic = DB, erro = e)            
         else:
+            print(4)
             Produto1 = Produto(dt, nomep,tipo,marca,data,local,observ,codigo,email,telefone)
             Produto1.Salvar()
     #Caso for chamado via GET ou apos terminar a insercao:
+    print(11)
     return redirect(url_for('main'))
 @app.route('/produto/', methods = ['POST', 'GET'])
 def abrir_produto():
@@ -144,32 +148,33 @@ def abrir_produto():
 
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
     
-
-    #Converter de prod (dicionario) para obj da classe produto
+        #Converter de prod (dicionario) para obj da classe produto
     D=[]
     for e in prod.values():
         for i in e:
             D.append(i)
     
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    
-    
-
-#Verificacao de dados
-    if request.method == 'POST':
-
+    print(0)
+    #Tentar a insercao apenas quando vier via POST
+    if request.method == 'GET':
+    #Caso for chamado via GET ou apos terminar a insercao:
+        print(11)
+        return render_template('ifind3.html', obj= objet, erro = '')
+    else:
+        print(1)
         codigov = request.form['CodigoV']
-
-        if codigov == objet.codigo:
-            #liberar o email da pessoa que achou
-            return render_template('ifind4.html', obj= objet)
+         #Aqui uma pequena validacao dos dados inseridos.
+        if codigoV != codigo: 
+            e = error = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente' #Mensagem de erro
+            print(2)
+            return render_template('ifind3.html', obj= objet, erro = e)          
         else:
-            error = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente'
-            return render_template('ifind3.html', obj= objet, erro = error)  
-    return render_template('ifind3.html', obj= objet, erro = '')
-
+            print(4)
+            return render_template('ifind4.html', obj= objet)
 @app.route('/verifica', methods=['POST', 'GET'])
-def mostrar_contato():            
+def mostrar_contato():   
+    dt = request.args['dt']        
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
 
@@ -180,7 +185,7 @@ def mostrar_contato():
             D.append(i)
     
     objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-        
+    print(objet)
     return render_template('ifind4.html', obj= objet)
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
 #ira rodar no Spyder, durante a fase de desenvolvimento e 
