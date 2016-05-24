@@ -172,25 +172,34 @@ def abrir_produto():
 
 
     return render_template('ifind3.html', obj= objet, erro = '')
-@app.route('/produto/verifica', methods=['POST', 'GET'])
+@app.route('/produto/verifica/', methods=['POST', 'GET'])
 def mostrar_contato():
+    print('mostrar_contato')
 
-    dt = request.args['dt']        
-    my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-    prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
-
-    #Converter de prod (dicionario) para obj da classe produto
-    D=[]
-    for e in prod.values():
-        for i in e:
-            D.append(i)
-    objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
     if request.method == 'POST':
-        print(1)
+        print('recebe o post')
+        dt = request.args['dt']        
+        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+        prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
+        print('pega o  produto')
+
+
+        #Converter de prod (dicionario) para obj da classe produto
+        D=[]
+        for e in prod.values():
+            for i in e:
+                D.append(i)
+        objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
+        print('monta o objeto')
+
+
         codigov = request.form['CodigoV']
+        print('recebe o codigo',codigov)
+
+
          #Aqui uma pequena validacao dos dados inseridos.
         if codigoV == codigo: 
-            print(2)
+            print('valida')
             return render_template('ifind4.html', obj= objet) 
     else:
         e = 'O codigo de verificação que você inseriu não bate com os dos nossos dados. Porfavor tente novamente' #Mensagem de erro

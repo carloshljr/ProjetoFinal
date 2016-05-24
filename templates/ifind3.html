@@ -57,14 +57,16 @@
                   <p> Local Achado : <td>{{ obj.local }}</td></p>
                   <p> Pergunta para a valida&ccedil;&atilde;o : <td>{{ obj.observ }}</td></p>
 
+
+                  </form>
                   <div class="col_9"></div>
                   <div class="col_3 right">
                   <label for="CodigoV">Verifica&ccedil;&atilde;o : </label>
                   <input id="CodigoV" name="CodigoV" type="text" />
                   </div>
 
-                  </form>
-                  <form class="vertical" method="POST" action="./verifica">
+                  
+                  <form class="vertical" method="POST" action="./verifica?dt={{ obj.dt }}">
                   <div class="col_12 right">
                   <button class="medium"><i class="fa fa-Objeto"></i> Verificar</button></div>
 
