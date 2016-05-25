@@ -35,12 +35,12 @@ class Produto():
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
     
-#    def Salvar_em_Achados(self):
-#        prod = {}
-#        prod[self.nomep]= self.dt,self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
-#        
-#        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-#        my_firebase.put_sync(point = '/Achado/{0}'.format(self.dt) , data = prod)
+    def Salvar_em_Achados(self):
+        prod = {}
+        prod[self.nomep]= self.dt,self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
+        
+        my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
+        my_firebase.put_sync(point = '/Achado/{0}'.format(self.dt) , data = prod)
 
         
 def lista_produto():
