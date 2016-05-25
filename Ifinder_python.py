@@ -129,7 +129,7 @@ def add():
         dt = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
         
          #Aqui uma pequena validacao dos dados inseridos.
-        if codigo == '' or email == '': 
+        if codigo == '' or email == '' or nomep = '': 
             e = 'A validação, o email e o nome do produto não podem estar vazios!' #Mensagem de erro
             # print(2)
             return render_template('ifind.html', dic = DB, erro = e)
