@@ -36,11 +36,11 @@ class Produto():
         my_firebase.put_sync(point = '/Produto/{0}'.format(self.dt) , data = prod)
     
     def Salvar_em_Achados(self):
-        prod = {}
-        prod[self.nomep]= self.dt,self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
+        produto = {}
+        produto[self.nomep]= self.dt,self.nomep, self.tipo, self.marca, self.data, self.local, self.observ, self.codigo, self.email, self.telefone
         
         my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
-        my_firebase.put_sync(point = '/Achados/{0}'.format(self.dt) , data = prod)
+        my_firebase.put_sync(point = '/Achados/{0}'.format(self.dt) , data = produto)
 
         
 def lista_produto():
@@ -199,24 +199,25 @@ def mostrar_contato():
 @app.route('/del', methods=['POST', 'GET'])
 def deletar():
     dt = request.args['dt']
-    print('Pega o dt = ',dt) 
+
 
     my_firebase = firecall.Firebase("https://ifind.firebaseio.com/")
     prod = eval(my_firebase.get_sync(point = '/Produto/{0}'.format(dt)))
-    print('Acha o produto:',prod)
+
 
     D=[]
     for e in prod.values():
         for i in e:
             D.append(i)
     
-    objet = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    objet.Salvar_em_Achados
-    print('Monta o objeto:', D)
+    objeto = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
+    objeto.Salvar_em_Achados
 
-    my_firebase.delete_sync('/Produto/{0}'.format(dt))
-    print('Deleta no firebase')
+
+    my_firebase.delete_sync(point = '/Produto/{0}'.format(objeto.dt))
+
     
+    del DB[objeto.nomep]
     return redirect(url_for('main'))
         
 #Comando necessario para iniciar a aplicacao. Como a aplicacao nao
