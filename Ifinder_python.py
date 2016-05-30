@@ -211,7 +211,7 @@ def deletar():
             D.append(i)
     
     objeto = Produto(D[0],D[1],D[2],D[3],D[4],D[5],D[6],D[7],D[8],D[9])
-    objeto.Salvar_em_Achados
+    objeto.Salvar_em_Achados()
 
 
     my_firebase.delete_sync(point = '/Produto/{0}'.format(objeto.dt))
